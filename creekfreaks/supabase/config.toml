@@ -1,0 +1,7 @@
+project_id = "nryduglepeblvvlynjwn"
+
+[functions.cypress-chat]
+verify_jwt = false
+
+[functions.cypress-tts]
+verify_jwt = false

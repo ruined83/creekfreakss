@@ -1,0 +1,183 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dark & Bold Theme - Tournament Ready */
+    --background: 218 50% 7%;
+    --foreground: 40 30% 95%;
+
+    --card: 218 45% 11%;
+    --card-foreground: 40 30% 95%;
+
+    --popover: 218 50% 7%;
+    --popover-foreground: 40 30% 95%;
+
+    /* Lime Green Bass (Primary) */
+    --primary: 80 75% 40%;
+    --primary-foreground: 218 50% 7%;
+
+    /* Charcoal (Secondary) */
+    --secondary: 218 40% 15%;
+    --secondary-foreground: 40 25% 90%;
+
+    /* Slate Blue-Gray (Muted) */
+    --muted: 218 30% 22%;
+    --muted-foreground: 210 15% 60%;
+
+    /* Amber/Orange (Accent) */
+    --accent: 35 90% 55%;
+    --accent-foreground: 218 50% 7%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 30% 95%;
+
+    --border: 218 30% 18%;
+    --input: 218 30% 18%;
+    --ring: 80 75% 40%;
+
+    --radius: 0.75rem;
+
+    /* Creek Freaks tokens - Dark & Bold */
+    --creek-water: 195 80% 50%;
+    --creek-water-light: 195 60% 35%;
+    --creek-moss: 80 75% 40%;
+    --creek-earth: 35 45% 30%;
+    --creek-sand: 40 30% 92%;
+    --creek-sunset: 28 95% 50%;
+    --creek-fire: 0 75% 45%;
+
+    /* Gradients */
+    --gradient-creek: linear-gradient(180deg, hsl(195 80% 50% / 0.1) 0%, hsl(80 75% 40% / 0.05) 100%);
+    --gradient-tournament: linear-gradient(135deg, hsl(218 50% 7%) 0%, hsl(218 45% 14%) 100%);
+    --gradient-fire: linear-gradient(180deg, hsl(35 90% 55% / 0.15) 0%, hsl(218 50% 7% / 0) 100%);
+    --gradient-hero: linear-gradient(180deg, hsl(218 50% 10%) 0%, hsl(218 50% 7%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-creek: 0 8px 30px hsl(80 75% 40% / 0.15);
+    --shadow-glow: 0 0 40px hsl(80 75% 40% / 0.2);
+
+    --sidebar-background: 218 45% 9%;
+    --sidebar-foreground: 40 25% 90%;
+    --sidebar-primary: 80 75% 40%;
+    --sidebar-primary-foreground: 218 50% 7%;
+    --sidebar-accent: 218 30% 15%;
+    --sidebar-accent-foreground: 40 25% 90%;
+    --sidebar-border: 218 30% 18%;
+    --sidebar-ring: 80 75% 40%;
+  }
+
+  /* Dark mode is now the default - light mode override if needed */
+  .light {
+    --background: 40 20% 97%;
+    --foreground: 218 50% 10%;
+
+    --card: 40 25% 95%;
+    --card-foreground: 218 50% 10%;
+
+    --popover: 40 20% 97%;
+    --popover-foreground: 218 50% 10%;
+
+    --primary: 80 70% 35%;
+    --primary-foreground: 40 20% 97%;
+
+    --secondary: 35 30% 85%;
+    --secondary-foreground: 218 50% 15%;
+
+    --muted: 210 15% 90%;
+    --muted-foreground: 218 20% 40%;
+
+    --accent: 35 85% 50%;
+    --accent-foreground: 218 50% 10%;
+
+    --destructive: 0 65% 50%;
+    --destructive-foreground: 40 20% 97%;
+
+    --border: 210 20% 85%;
+    --input: 210 20% 85%;
+    --ring: 80 70% 35%;
+
+    --creek-water: 195 55% 50%;
+    --creek-water-light: 195 45% 75%;
+    --creek-moss: 80 65% 35%;
+    --creek-earth: 30 25% 35%;
+    --creek-sand: 40 30% 88%;
+    --creek-sunset: 28 90% 50%;
+    --creek-fire: 0 70% 45%;
+
+    --sidebar-background: 40 20% 95%;
+    --sidebar-foreground: 218 50% 15%;
+    --sidebar-primary: 80 70% 35%;
+    --sidebar-primary-foreground: 40 20% 97%;
+    --sidebar-accent: 210 15% 88%;
+    --sidebar-accent-foreground: 218 50% 15%;
+    --sidebar-border: 210 20% 85%;
+    --sidebar-ring: 80 70% 35%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: 'Crimson Text', serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .font-serif {
+    font-family: 'Crimson Text', serif;
+  }
+
+  .font-sans {
+    font-family: 'Outfit', sans-serif;
+  }
+
+  .bg-gradient-creek {
+    background: var(--gradient-creek);
+  }
+
+  .bg-gradient-tournament {
+    background: var(--gradient-tournament);
+  }
+
+  .bg-gradient-fire {
+    background: var(--gradient-fire);
+  }
+
+  .bg-gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-creek {
+    box-shadow: var(--shadow-creek);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+}
