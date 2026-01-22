@@ -1,20 +1,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import FirecrawlApp from '@mendable/firecrawl-js';
+import { scrapeLocal } from "@/lib/local-scraper";
 
 export async function POST(request: NextRequest) {
   try {
     const { url, formats = ['markdown', 'html'], options = {} } = await request.json();
-    
+
     if (!url) {
       return NextResponse.json(
         { error: "URL is required" },
         { status: 400 }
       );
     }
-    
+
+    // CHECK FOR LOCALHOST
+    if (url.includes("localhost") || url.includes("127.0.0.1")) {
+      console.log("Detecting localhost URL, using Puppeteer...");
+      const localResult = await scrapeLocal(url);
+      return NextResponse.json(localResult);
+    }
+
     // Initialize Firecrawl with API key from environment
     const apiKey = process.env.FIRECRAWL_API_KEY;
-    
+
     if (!apiKey) {
       console.error("FIRECRAWL_API_KEY not configured");
       // For demo purposes, return mock data if API key is not set
@@ -35,9 +43,9 @@ export async function POST(request: NextRequest) {
         }
       });
     }
-    
+
     const app = new FirecrawlApp({ apiKey });
-    
+
     // Scrape the website using the latest SDK patterns
     // Include screenshot if requested in formats
     const scrapeResult = await app.scrape(url, {
@@ -47,16 +55,16 @@ export async function POST(request: NextRequest) {
       timeout: options.timeout || 30000,
       ...options // Pass through any additional options
     });
-    
+
     // Handle the response according to the latest SDK structure
     const result = scrapeResult as any;
     if (result.success === false) {
       throw new Error(result.error || "Failed to scrape website");
     }
-    
+
     // The SDK may return data directly or nested
     const data = result.data || result;
-    
+
     return NextResponse.json({
       success: true,
       data: {
@@ -72,10 +80,10 @@ export async function POST(request: NextRequest) {
         raw: data
       }
     });
-    
+
   } catch (error) {
     console.error("Error scraping website:", error);
-    
+
     // Return a more detailed error response
     return NextResponse.json({
       success: false,

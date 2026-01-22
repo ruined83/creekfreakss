@@ -1,0 +1,196 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gradient-to-br from-gray-900 via-blue-950/30 to-cyan-950/30 text-gray-100 font-mono antialiased;
+    }
+
+    * {
+        @apply transition-colors duration-300;
+    }
+}
+
+@layer components {
+
+    /* Premium Glassmorphism Cards */
+    .control-card {
+        @apply bg-gray-800/80 backdrop-blur-xl border border-cyan-500/30 rounded-2xl p-6 hover:border-cyan-400/60 hover:shadow-2xl hover:shadow-cyan-500/20 hover:scale-[1.02] transition-all duration-300 ease-out relative overflow-hidden;
+    }
+
+    .control-card::before {
+        content: '';
+        @apply absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-blue-500/5 to-purple-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500;
+    }
+
+    /* Glass Card Variant */
+    .glass-card {
+        @apply bg-gray-800/70 backdrop-blur-2xl rounded-2xl shadow-2xl border border-gray-700/30 hover:bg-gray-800/80 transition-all duration-300;
+    }
+
+    .status-indicator {
+        @apply w-2 h-2 rounded-full animate-pulse;
+    }
+
+    .toggle-switch {
+        @apply relative inline-flex h-6 w-11 items-center rounded-full transition-colors focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2 focus:ring-offset-gray-900;
+    }
+
+    .toggle-switch-active {
+        @apply bg-gradient-to-r from-cyan-500 to-blue-500;
+    }
+
+    .toggle-switch-inactive {
+        @apply bg-gray-700;
+    }
+
+    .log-entry {
+        @apply px-4 py-2 border-l-2 hover:bg-gray-800/50 transition-colors font-mono text-sm hover:border-cyan-400 hover:scale-[1.01];
+    }
+
+    .glow-text {
+        text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+    }
+
+    /* Premium Buttons */
+    .btn-primary {
+        @apply px-6 py-3 bg-gradient-to-r from-cyan-600 to-blue-600 text-white rounded-xl hover:from-cyan-700 hover:to-blue-700 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/50 active:scale-95 transition-all duration-200 ease-out font-semibold shadow-md;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 bg-gray-700/90 backdrop-blur-sm text-gray-100 rounded-xl hover:bg-gray-600 hover:scale-105 hover:shadow-lg active:scale-95 border border-gray-600 transition-all duration-200 ease-out font-semibold shadow-md;
+    }
+}
+
+@layer utilities {
+
+    /* Animation Utilities */
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.5s ease-out;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out;
+    }
+
+    /* Stagger Animation Delays */
+    .delay-100 {
+        animation-delay: 100ms;
+    }
+
+    .delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .delay-300 {
+        animation-delay: 300ms;
+    }
+
+    .delay-400 {
+        animation-delay: 400ms;
+    }
+
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-gray-800 rounded-full;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-gradient-to-b from-cyan-500 to-blue-500 rounded-full hover:from-cyan-600 hover:to-blue-600;
+    }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes pulse-slow {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.5;
+    }
+}
+
+.animate-pulse-slow {
+    animation: pulse-slow 3s ease-in-out infinite;
+}
+
+/* Floating Animation */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}

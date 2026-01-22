@@ -1,0 +1,264 @@
+import React, { useState } from 'react';
+import { LayoutDashboard, Calendar as CalendarIcon, Users, BookOpen, FileText, Phone, Menu, Search, Bell, ChevronLeft, ChevronRight } from 'lucide-react';
+import CalendarPage from './CalendarPage';
+import ClientsPage from './ClientsPage';
+import BookingsPage from './BookingsPage';
+import ReportsPage from './ReportsPage';
+import AISecretaryPage from './AISecretaryPage';
+
+function App() {
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [currentPage, setCurrentPage] = useState('dashboard');
+    const [currentMonth, setCurrentMonth] = useState(new Date());
+
+    const stats = [
+        { title: 'Upcoming Bookings', value: '24', change: '+5 this week', color: 'blue' },
+        { title: 'Completed', value: '156', change: 'This month', color: 'green' },
+        { title: 'Total Revenue', value: '$12,450', change: '+18% vs last month', color: 'purple' },
+        { title: 'Active Clients', value: '89', change: '+12 new', color: 'orange' },
+    ];
+
+    const clients = [
+        { id: 1, name: 'Sarah Johnson', email: 'sarah@example.com', phone: '(555) 123-4567', bookings: 8, status: 'Active' },
+        { id: 2, name: 'Michael Chen', email: 'michael@example.com', phone: '(555) 234-5678', bookings: 5, status: 'Active' },
+        { id: 3, name: 'Emily Rodriguez', email: 'emily@example.com', phone: '(555) 345-6789', bookings: 12, status: 'Active' },
+        { id: 4, name: 'David Kim', email: 'david@example.com', phone: '(555) 456-7890', bookings: 3, status: 'Inactive' },
+    ];
+
+    const upcomingBookings = [
+        { id: 1, client: 'Sarah Johnson', service: 'Consultation', date: 'Dec 26, 2025', time: '10:00 AM', status: 'Confirmed' },
+        { id: 2, client: 'Michael Chen', service: 'Follow-up', date: 'Dec 26, 2025', time: '2:00 PM', status: 'Confirmed' },
+        { id: 3, client: 'Emily Rodriguez', service: 'Initial Meeting', date: 'Dec 27, 2025', time: '11:00 AM', status: 'Pending' },
+        { id: 4, client: 'David Kim', service: 'Review', date: 'Dec 27, 2025', time: '3:00 PM', status: 'Confirmed' },
+    ];
+
+    const calendarEvents = [
+        { day: 26, title: 'Sarah - Consultation', time: '10:00 AM', color: 'blue' },
+        { day: 26, title: 'Michael - Follow-up', time: '2:00 PM', color: 'green' },
+        { day: 27, title: 'Emily - Initial', time: '11:00 AM', color: 'purple' },
+        { day: 27, title: 'David - Review', time: '3:00 PM', color: 'orange' },
+        { day: 30, title: 'Team Meeting', time: '9:00 AM', color: 'blue' },
+    ];
+
+    const menuItems = [
+        { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
+        { id: 'calendar', name: 'Calendar', icon: CalendarIcon },
+        { id: 'clients', name: 'Clients', icon: Users },
+        { id: 'bookings', name: 'Bookings', icon: BookOpen },
+        { id: 'ai-calls', name: 'AI Secretary', icon: Phone, badge: '✨' },
+        { id: 'reports', name: 'Reports', icon: FileText },
+    ];
+
+    const getDaysInMonth = () => {
+        const year = currentMonth.getFullYear();
+        const month = currentMonth.getMonth();
+        const firstDay = new Date(year, month, 1).getDay();
+        const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+        const days = [];
+        for (let i = 0; i < firstDay; i++) {
+            days.push(null);
+        }
+        for (let i = 1; i <= daysInMonth; i++) {
+            days.push(i);
+        }
+        return days;
+    };
+
+    const getEventsForDay = (day) => {
+        return calendarEvents.filter(event => event.day === day);
+    };
+
+    const nextMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+    };
+
+    const prevMonth = () => {
+        setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
+    };
+
+    return (
+        <div className="min-h-screen flex bg-gray-50">
+            {/* Sidebar */}
+            <aside className={`fixed left-0 top-0 h-full bg-white border-r border-gray-200 transition-all ${sidebarOpen ? 'w-64' : 'w-20'} z-40`}>
+                <div className="flex flex-col h-full">
+                    <div className="p-6 border-b border-gray-200">
+                        {sidebarOpen ? (
+                            <h1 className="text-2xl font-bold text-blue-600">BookFlow</h1>
+                        ) : (
+                            <div className="text-2xl font-bold text-blue-600 text-center">BF</div>
+                        )}
+                    </div>
+                    <nav className="flex-1 p-4">
+                        <ul className="space-y-1">
+                            {menuItems.map((item) => {
+                                const Icon = item.icon;
+                                const isActive = currentPage === item.id;
+                                return (
+                                    <li key={item.id}>
+                                        <button
+                                            onClick={() => setCurrentPage(item.id)}
+                                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-blue-50 text-blue-600' : 'text-gray-700 hover:bg-gray-100'
+                                                }`}
+                                        >
+                                            <Icon size={20} />
+                                            {sidebarOpen && (
+                                                <span className="font-medium flex items-center gap-2">
+                                                    {item.name}
+                                                    {item.badge && (
+                                                        <span className="text-xs">{item.badge}</span>
+                                                    )}
+                                                </span>
+                                            )}
+                                        </button>
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </nav>
+                </div>
+            </aside>
+
+            {/* Main Content */}
+            <div className={`flex-1 flex flex-col transition-all ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>
+                {/* Navbar */}
+                <header className="bg-white border-b border-gray-200 px-6 py-4">
+                    <div className="flex items-center justify-between">
+                        <div className="flex items-center gap-4">
+                            <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-gray-100 rounded-lg">
+                                <Menu size={20} />
+                            </button>
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                <input type="text" placeholder="Search clients, bookings..." className="pl-10 pr-4 py-2 w-80 bg-gray-100 border-0 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" />
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-4">
+                            <button className="relative p-2 hover:bg-gray-100 rounded-lg">
+                                <Bell size={20} />
+                                <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                            </button>
+                            <div className="w-10 h-10 rounded-full bg-blue-600 flex items-center justify-center text-white font-semibold">BR</div>
+                        </div>
+                    </div>
+                </header>
+
+                {/* Dashboard Content */}
+                <main className="flex-1 p-6">
+                    {currentPage === 'dashboard' && (
+                        <div className="space-y-6">
+                            <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
+
+                            {/* Stats */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                {stats.map((stat, i) => (
+                                    <div key={i} className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                                        <p className="text-gray-600 text-sm">{stat.title}</p>
+                                        <p className="text-3xl font-bold text-gray-900 mt-2">{stat.value}</p>
+                                        <p className="text-sm text-gray-500 mt-2">{stat.change}</p>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Calendar & Bookings */}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                {/* Mini Calendar */}
+                                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-bold">Calendar</h3>
+                                        <div className="flex gap-2">
+                                            <button onClick={prevMonth} className="p-2 hover:bg-gray-100 rounded">
+                                                <ChevronLeft size={20} />
+                                            </button>
+                                            <button onClick={nextMonth} className="p-2 hover:bg-gray-100 rounded">
+                                                <ChevronRight size={20} />
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="text-center mb-4 font-semibold">
+                                        {currentMonth.toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+                                    </div>
+                                    <div className="grid grid-cols-7 gap-2 text-center text-sm">
+                                        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map(day => (
+                                            <div key={day} className="font-semibold text-gray-600 py-2">{day}</div>
+                                        ))}
+                                        {getDaysInMonth().map((day, i) => {
+                                            const events = day ? getEventsForDay(day) : [];
+                                            return (
+                                                <div key={i} className={`p-2 rounded ${day ? 'hover:bg-gray-100 cursor-pointer' : ''} ${events.length > 0 ? 'bg-blue-50 font-semibold text-blue-600' : ''}`}>
+                                                    {day || ''}
+                                                </div>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
+
+                                {/* Upcoming Bookings */}
+                                <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                                    <h3 className="text-lg font-bold mb-4">Upcoming Bookings</h3>
+                                    <div className="space-y-3">
+                                        {upcomingBookings.map((booking) => (
+                                            <div key={booking.id} className="p-4 bg-gray-50 rounded-lg">
+                                                <div className="flex items-center justify-between mb-2">
+                                                    <p className="font-semibold text-gray-900">{booking.client}</p>
+                                                    <span className={`px-2 py-1 rounded text-xs font-medium ${booking.status === 'Confirmed' ? 'bg-green-100 text-green-700' : 'bg-yellow-100 text-yellow-700'
+                                                        }`}>
+                                                        {booking.status}
+                                                    </span>
+                                                </div>
+                                                <p className="text-sm text-gray-600">{booking.service}</p>
+                                                <p className="text-xs text-gray-500 mt-1">{booking.date} at {booking.time}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Clients Table */}
+                            <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-6">
+                                <h3 className="text-lg font-bold mb-4">Recent Clients</h3>
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="border-b border-gray-200">
+                                                <th className="text-left py-3 px-4 font-semibold text-sm">Name</th>
+                                                <th className="text-left py-3 px-4 font-semibold text-sm">Email</th>
+                                                <th className="text-left py-3 px-4 font-semibold text-sm">Phone</th>
+                                                <th className="text-left py-3 px-4 font-semibold text-sm">Bookings</th>
+                                                <th className="text-left py-3 px-4 font-semibold text-sm">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {clients.map((client) => (
+                                                <tr key={client.id} className="border-b border-gray-200 hover:bg-gray-50">
+                                                    <td className="py-3 px-4 font-medium">{client.name}</td>
+                                                    <td className="py-3 px-4 text-gray-600">{client.email}</td>
+                                                    <td className="py-3 px-4 text-gray-600">{client.phone}</td>
+                                                    <td className="py-3 px-4">{client.bookings}</td>
+                                                    <td className="py-3 px-4">
+                                                        <span className={`px-2 py-1 rounded text-xs font-medium ${client.status === 'Active' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-700'
+                                                            }`}>
+                                                            {client.status}
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {currentPage === 'calendar' && <CalendarPage />}
+                    {currentPage === 'clients' && <ClientsPage />}
+                    {currentPage === 'bookings' && <BookingsPage />}
+                    {currentPage === 'ai-calls' && <AISecretaryPage />}
+                    {currentPage === 'reports' && <ReportsPage />}
+                </main>
+            </div>
+        </div>
+    );
+}
+
+export default App;

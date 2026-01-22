@@ -1,0 +1,122 @@
+@tailwind base;
+
+@tailwind components;
+
+@tailwind utilities;
+
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+
+@layer components {
+
+  .section-container {
+
+    @apply w-full py-12 px-4 sm:px-6 lg:px-8;
+
+  }
+
+  .section-title {
+
+    @apply text-3xl font-extrabold text-gray-900 dark:text-white sm:text-4xl;
+
+  }
+
+  .neobrut-border {
+
+    border: 2px solid black;
+
+  }
+
+  .neobrut-shadow {
+
+    box-shadow: 4px 4px 0px black;
+
+  }
+
+  .dark .neobrut-border {
+
+    border: 2px solid white;
+
+  }
+
+  .dark .neobrut-shadow {
+
+    box-shadow: 4px 4px 0px white;
+
+  }
+
+  .transition-all {
+
+    transition-property: all;
+
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    transition-duration: 150ms;
+
+  }
+
+  .animate-fade-in {
+
+    animation: fade-in 0.5s forwards;
+
+  }
+
+
+  @keyframes fade-in {
+
+    from {
+
+      opacity: 0;
+
+      transform: translateY(-20px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
+
+  }
+
+
+  .animate-fade-in-up {
+
+    animation: fade-in-up 1s forwards;
+
+  }
+
+
+  @keyframes fade-in-up {
+
+    from {
+
+      opacity: 0;
+
+      transform: translateY(50px);
+
+    }
+
+    to {
+
+      opacity: 1;
+
+      transform: translateY(0);
+
+    }
+
+  }
+
+}

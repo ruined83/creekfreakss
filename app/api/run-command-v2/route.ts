@@ -10,28 +10,28 @@ declare global {
 export async function POST(request: NextRequest) {
   try {
     const { command } = await request.json();
-    
+
     if (!command) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'Command is required' 
+      return NextResponse.json({
+        success: false,
+        error: 'Command is required'
       }, { status: 400 });
     }
-    
+
     // Get provider from sandbox manager or global state
     const provider = sandboxManager.getActiveProvider() || global.activeSandboxProvider;
-    
+
     if (!provider) {
-      return NextResponse.json({ 
-        success: false, 
-        error: 'No active sandbox' 
+      return NextResponse.json({
+        success: false,
+        error: 'No active sandbox'
       }, { status: 400 });
     }
-    
+
     console.log(`[run-command-v2] Executing: ${command}`);
-    
+
     const result = await provider.runCommand(command);
-    
+
     return NextResponse.json({
       success: result.success,
       output: result.stdout,
@@ -39,12 +39,19 @@ export async function POST(request: NextRequest) {
       exitCode: result.exitCode,
       message: result.success ? 'Command executed successfully' : 'Command failed'
     });
-    
-  } catch (error) {
+
+  } catch (error: any) {
+    const errorMessage = error?.message || String(error);
+    const isSandboxNotFound = errorMessage.toLowerCase().includes('sandbox not found') ||
+      errorMessage.toLowerCase().includes('not found');
+
     console.error('[run-command-v2] Error:', error);
-    return NextResponse.json({ 
-      success: false, 
-      error: (error as Error).message 
-    }, { status: 500 });
+
+    return NextResponse.json({
+      success: false,
+      error: isSandboxNotFound
+        ? 'The sandbox has expired or was deleted. Please refresh the page to create a new sandbox.'
+        : errorMessage
+    }, { status: isSandboxNotFound ? 410 : 500 });
   }
 }

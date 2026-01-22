@@ -1,0 +1,39 @@
+import React, { useState } from 'react';
+import Sidebar from './components/Sidebar';
+import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import UsersPage from './UsersPage';
+import AnalyticsPage from './AnalyticsPage';
+import SettingsPage from './SettingsPage';
+import Footer from './components/Footer';
+import AIAssistant from './components/AIAssistant';
+
+function App() {
+    const [darkMode, setDarkMode] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [currentPage, setCurrentPage] = useState('dashboard');
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        document.documentElement.classList.toggle('dark');
+    };
+
+    return (
+        <div className="min-h-screen flex">
+            <Sidebar isOpen={sidebarOpen} currentPage={currentPage} setCurrentPage={setCurrentPage} />
+            <div className={`flex-1 flex flex-col transition-all ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>
+                <Navbar darkMode={darkMode} toggleDarkMode={toggleDarkMode} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
+                <main className="flex-1 p-6">
+                    {currentPage === 'dashboard' && <Dashboard />}
+                    {currentPage === 'users' && <UsersPage />}
+                    {currentPage === 'analytics' && <AnalyticsPage />}
+                    {currentPage === 'settings' && <SettingsPage />}
+                </main>
+                <Footer />
+            </div>
+            <AIAssistant />
+        </div>
+    );
+}
+
+export default App;

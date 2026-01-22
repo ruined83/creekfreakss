@@ -286,7 +286,7 @@ export async function POST(request: NextRequest) {
     if (morphEnabled) {
       console.log('[apply-ai-code-stream] Morph edits found:', morphEdits.length);
     }
-    
+
     // Log what was parsed
     console.log('[apply-ai-code-stream] Parsed result:');
     console.log('[apply-ai-code-stream] Files found:', parsed.files.length);
@@ -320,29 +320,40 @@ export async function POST(request: NextRequest) {
         // If we got a new provider (not reconnected), we need to create a new sandbox
         if (!provider.getSandboxInfo()) {
           console.log(`[apply-ai-code-stream] Creating new sandbox since reconnection failed for ${sandboxId}`);
-          await provider.createSandbox();
+          const newSandboxInfo = await provider.createSandbox();
           await provider.setupViteApp();
-          sandboxManager.registerSandbox(sandboxId, provider);
+
+          // Register with the new sandbox ID
+          sandboxManager.registerSandbox(newSandboxInfo.sandboxId, provider);
+
+          console.log(`[apply-ai-code-stream] ✓ Created new sandbox ${newSandboxInfo.sandboxId} (previous sandbox ${sandboxId} was not found)`);
         }
 
         // Update legacy global state
         global.activeSandboxProvider = provider;
         console.log(`[apply-ai-code-stream] Successfully got provider for sandbox ${sandboxId}`);
-      } catch (providerError) {
+      } catch (providerError: any) {
+        const errorMessage = providerError?.message || String(providerError);
+        const isSandboxNotFound = errorMessage.toLowerCase().includes('sandbox not found') ||
+          errorMessage.toLowerCase().includes('not found');
+
         console.error(`[apply-ai-code-stream] Failed to get or create provider for sandbox ${sandboxId}:`, providerError);
+
         return NextResponse.json({
           success: false,
-          error: `Failed to create sandbox provider for ${sandboxId}. The sandbox may have expired.`,
+          error: isSandboxNotFound
+            ? `The sandbox ${sandboxId} has expired or was deleted. Please refresh the page to create a new sandbox.`
+            : `Failed to create sandbox provider: ${errorMessage}`,
           results: {
             filesCreated: [],
             packagesInstalled: [],
             commandsExecuted: [],
-            errors: [`Sandbox provider creation failed: ${(providerError as Error).message}`]
+            errors: [`Sandbox provider creation failed: ${errorMessage}`]
           },
           explanation: parsed.explanation,
           structure: parsed.structure,
           parsedFiles: parsed.files,
-          message: `Parsed ${parsed.files.length} files but couldn't apply them - sandbox reconnection failed.`
+          message: `Parsed ${parsed.files.length} files but couldn't apply them - ${isSandboxNotFound ? 'sandbox expired' : 'sandbox creation failed'}.`
         }, { status: 500 });
       }
     }
@@ -423,7 +434,7 @@ export async function POST(request: NextRequest) {
             await sendProgress({ type: 'warning', message: 'Morph enabled but no <edit> blocks found; falling back to full-file flow' });
           }
         }
-        
+
         // Step 1: Install packages
         const packagesArray = Array.isArray(packages) ? packages : [];
         const parsedPackages = Array.isArray(parsed.packages) ? parsed.packages : [];
@@ -579,15 +590,15 @@ export async function POST(request: NextRequest) {
             let normalizedPath = file.path.startsWith('/') ? file.path.slice(1) : file.path;
             const fileName = normalizedPath.split('/').pop() || '';
             if (!normalizedPath.startsWith('src/') &&
-                !normalizedPath.startsWith('public/') &&
-                normalizedPath !== 'index.html' &&
-                !configFiles.includes(fileName)) {
+              !normalizedPath.startsWith('public/') &&
+              normalizedPath !== 'index.html' &&
+              !configFiles.includes(fileName)) {
               normalizedPath = 'src/' + normalizedPath;
             }
             return !morphUpdatedPaths.has(normalizedPath);
           });
         }
-        
+
         for (const [index, file] of filteredFiles.entries()) {
           try {
             // Send progress for each file

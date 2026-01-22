@@ -1,1 +1,88 @@
-@import "../styles/main.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --background: #0a0005;
+    --foreground: #ededed;
+    --crimson-blood: #8b0000;
+    --crimson-glow: #ff0044;
+    --mileena-panel: rgba(26, 0, 10, 0.6);
+}
+
+@layer base {
+    body {
+        @apply bg-[#0a0005] text-white selection:bg-red-900 selection:text-white;
+    }
+}
+
+@layer components {
+    .mileena-card {
+        @apply relative overflow-hidden rounded-xl border border-red-900/30 bg-[#1a000a] backdrop-blur-md transition-all duration-300;
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    .mileena-card:hover {
+        @apply border-red-500/50 shadow-[0_0_20px_#8b0000];
+    }
+
+    .mileena-glass {
+        background: rgba(139, 0, 0, 0.12);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .font-gothic {
+        font-family: var(--font-playfair), serif;
+    }
+
+    .font-body {
+        font-family: var(--font-inter), sans-serif;
+    }
+}
+
+/* Animations */
+@keyframes pulse-crimson {
+
+    0%,
+    100% {
+        box-shadow: 0 0 10px rgba(139, 0, 0, 0.2);
+    }
+
+    50% {
+        box-shadow: 0 0 25px rgba(255, 0, 68, 0.4);
+    }
+}
+
+.animate-pulse-crimson {
+    animation: pulse-crimson 3s infinite;
+}
+
+@keyframes drift {
+    0% {
+        transform: translate(0, 0);
+        opacity: 0;
+    }
+
+    50% {
+        opacity: 0.3;
+    }
+
+    100% {
+        transform: translate(100px, -100px);
+        opacity: 0;
+    }
+}
+
+.smoke-particle {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(139, 0, 0, 0.2) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(20px);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 15s infinite linear;
+}

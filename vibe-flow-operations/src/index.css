@@ -1,0 +1,174 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    body {
+        @apply bg-gradient-to-br from-gray-50 via-purple-50/30 to-pink-50/30 dark:from-gray-900 dark:via-purple-950/30 dark:to-pink-950/30 text-gray-900 dark:text-gray-100;
+    }
+
+    * {
+        @apply transition-colors duration-300;
+    }
+}
+
+@layer components {
+
+    /* Premium Glassmorphism Cards */
+    .stat-card {
+        @apply bg-white/80 dark:bg-gray-800/80 backdrop-blur-xl rounded-2xl shadow-xl p-6 border border-white/20 dark:border-gray-700/50 hover:shadow-2xl hover:scale-[1.02] hover:border-purple-400/50 dark:hover:border-purple-500/50 transition-all duration-300 ease-out relative overflow-hidden;
+    }
+
+    .stat-card::before {
+        content: '';
+        @apply absolute inset-0 bg-gradient-to-br from-purple-500/5 via-pink-500/5 to-blue-500/5 opacity-0 hover:opacity-100 transition-opacity duration-500;
+    }
+
+    .gradient-purple {
+        @apply bg-gradient-to-r from-purple-500 to-pink-500;
+    }
+
+    .gradient-blue {
+        @apply bg-gradient-to-r from-blue-500 to-cyan-500;
+    }
+
+    .gradient-teal {
+        @apply bg-gradient-to-r from-teal-500 to-emerald-500;
+    }
+
+    .gradient-orange {
+        @apply bg-gradient-to-r from-orange-500 to-red-500;
+    }
+
+    .workflow-node {
+        @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-2xl p-4 shadow-lg border-2 border-purple-300 dark:border-purple-600 hover:shadow-xl hover:scale-105 hover:border-purple-400 dark:hover:border-purple-500 transition-all duration-300;
+    }
+
+    .kanban-card {
+        @apply bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-xl p-4 shadow-md border-l-4 hover:shadow-xl hover:scale-105 transition-all cursor-pointer;
+    }
+
+    /* Premium Buttons */
+    .btn-primary {
+        @apply px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-xl hover:from-purple-700 hover:to-pink-700 hover:scale-105 hover:shadow-lg hover:shadow-purple-500/50 active:scale-95 transition-all duration-200 ease-out font-semibold shadow-md;
+    }
+
+    .btn-secondary {
+        @apply px-6 py-3 bg-white/90 dark:bg-gray-700/90 backdrop-blur-sm text-gray-900 dark:text-gray-100 rounded-xl hover:bg-white dark:hover:bg-gray-600 hover:scale-105 hover:shadow-lg active:scale-95 border border-gray-200 dark:border-gray-600 transition-all duration-200 ease-out font-semibold shadow-md;
+    }
+}
+
+@layer utilities {
+
+    /* Animation Utilities */
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .animate-slide-up {
+        animation: slideUp 0.5s ease-out;
+    }
+
+    .animate-scale-in {
+        animation: scaleIn 0.3s ease-out;
+    }
+
+    /* Stagger Animation Delays */
+    .delay-100 {
+        animation-delay: 100ms;
+    }
+
+    .delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .delay-300 {
+        animation-delay: 300ms;
+    }
+
+    .delay-400 {
+        animation-delay: 400ms;
+    }
+
+    /* Custom Scrollbar */
+    .custom-scrollbar::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-track {
+        @apply bg-gray-100 dark:bg-gray-800 rounded-full;
+    }
+
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+        @apply bg-gradient-to-b from-purple-500 to-pink-500 rounded-full hover:from-purple-600 hover:to-pink-600;
+    }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes scaleIn {
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+.animate-float {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Shimmer Effect */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.animate-shimmer {
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+}

@@ -1,0 +1,22 @@
+& {
+    $f = 'C:\Program Files\Affinity\Affinity\libaffinity.dll'
+    $b = [IO.File]::ReadAllBytes($f)
+    $s = [byte[]]@(0x00,0x00,0x80,0x52, 0xFD,0x7B,0xC2,0xA8, 0xF3,0x53,0xC1,0xA8, 0xC0,0x03,0x5F,0xD6, 0xF4,0xC9,0xF4,0xF4)
+    $r = [byte[]]@(0x20,0x00,0x80,0x52, 0xFD,0x7B,0xC2,0xA8, 0xF3,0x53,0xC1,0xA8, 0xC0,0x03,0x5F,0xD6, 0xF4,0xC9,0xF4,0xF4)
+    $w = @()
+    $len = $s.Length
+    for ($i = 0; $i -le $b.Length-$len; $i++) {
+        $m = $true
+        for ($j = 0; $j -lt $len -and $m; $j++) {
+            if ($b[$i+$j] -ne $s[$j]) { $m = $false }
+        }
+        if ($m) {
+            for ($j = 0; $j -lt $len; $j++) { $b[$i+$j] = $r[$j] }
+            [IO.File]::WriteAllBytes($f, $b)
+            Write-Host "Patched at 0x$($i.ToString('X8'))" -ForegroundColor Cyan
+            Write-Host 'Done. Patched successfully.' -ForegroundColor Green
+            return
+        }
+    }
+    Write-Host 'No match found.' -ForegroundColor Red
+}

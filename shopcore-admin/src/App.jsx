@@ -1,0 +1,291 @@
+import React, { useState } from 'react';
+import { LayoutDashboard, Package, ShoppingCart, Users, BarChart3, Settings, Menu, Sun, Moon, Search, Bell } from 'lucide-react';
+import { LineChart, Line, BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import ProductsPage from './ProductsPage';
+import OrdersPage from './OrdersPage';
+import CustomersPage from './CustomersPage';
+import AnalyticsPage from './AnalyticsPage';
+import SettingsPage from './SettingsPage';
+import AIAssistant from './components/AIAssistant';
+
+function App() {
+    const [darkMode, setDarkMode] = useState(false);
+    const [sidebarOpen, setSidebarOpen] = useState(true);
+    const [currentPage, setCurrentPage] = useState('dashboard');
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const toggleDarkMode = () => {
+        setDarkMode(!darkMode);
+        document.documentElement.classList.toggle('dark');
+    };
+
+    const stats = [
+        { title: 'Total Sales', value: '$45,231', change: '+12.5%', trend: 'up', color: 'green' },
+        { title: 'Orders Today', value: '142', change: '+8.2%', trend: 'up', color: 'blue' },
+        { title: 'Inventory Low', value: '23', change: '-3 items', trend: 'down', color: 'orange' },
+        { title: 'Revenue Trend', value: '+18%', change: 'vs last month', trend: 'up', color: 'purple' },
+    ];
+
+    const salesData = [
+        { month: 'Jan', sales: 4000, orders: 240 },
+        { month: 'Feb', sales: 3000, orders: 198 },
+        { month: 'Mar', sales: 5000, orders: 300 },
+        { month: 'Apr', sales: 4500, orders: 278 },
+        { month: 'May', sales: 6000, orders: 389 },
+        { month: 'Jun', sales: 5500, orders: 349 },
+    ];
+
+    const products = [
+        { id: 1, name: 'Wireless Headphones', category: 'Electronics', price: '$99.99', stock: 45, status: 'In Stock', image: '🎧' },
+        { id: 2, name: 'Smart Watch', category: 'Electronics', price: '$299.99', stock: 12, status: 'Low Stock', image: '⌚' },
+        { id: 3, name: 'Laptop Stand', category: 'Accessories', price: '$49.99', stock: 78, status: 'In Stock', image: '💻' },
+        { id: 4, name: 'USB-C Cable', category: 'Accessories', price: '$19.99', stock: 156, status: 'In Stock', image: '🔌' },
+        { id: 5, name: 'Desk Lamp', category: 'Office', price: '$39.99', stock: 8, status: 'Low Stock', image: '💡' },
+    ];
+
+    const recentOrders = [
+        { id: '#ORD-001', customer: 'John Doe', product: 'Wireless Headphones', amount: '$99.99', status: 'Delivered', date: '2 hours ago' },
+        { id: '#ORD-002', customer: 'Jane Smith', product: 'Smart Watch', amount: '$299.99', status: 'Processing', date: '4 hours ago' },
+        { id: '#ORD-003', customer: 'Bob Johnson', product: 'Laptop Stand', amount: '$49.99', status: 'Shipped', date: '6 hours ago' },
+        { id: '#ORD-004', customer: 'Alice Brown', product: 'USB-C Cable', amount: '$19.99', status: 'Delivered', date: '1 day ago' },
+    ];
+
+    const menuItems = [
+        { id: 'dashboard', name: 'Dashboard', icon: LayoutDashboard },
+        { id: 'products', name: 'Products', icon: Package },
+        { id: 'orders', name: 'Orders', icon: ShoppingCart },
+        { id: 'customers', name: 'Customers', icon: Users },
+        { id: 'analytics', name: 'Analytics', icon: BarChart3 },
+        { id: 'settings', name: 'Settings', icon: Settings },
+    ];
+
+    const filteredProducts = products.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return (
+        <div className={darkMode ? 'dark' : ''}>
+            <div className="min-h-screen flex bg-gray-50 dark:bg-gray-900">
+                {/* Sidebar */}
+                <aside className={`fixed left-0 top-0 h-full bg-white dark:bg-gray-800 border-r border-gray-200 dark:border-gray-700 transition-all ${sidebarOpen ? 'w-64' : 'w-20'} z-40`}>
+                    <div className="flex flex-col h-full">
+                        <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                            {sidebarOpen ? (
+                                <h1 className="text-2xl font-bold text-emerald-600">ShopCore</h1>
+                            ) : (
+                                <div className="text-2xl font-bold text-emerald-600 text-center">SC</div>
+                            )}
+                        </div>
+                        <nav className="flex-1 p-4">
+                            <ul className="space-y-1">
+                                {menuItems.map((item) => {
+                                    const Icon = item.icon;
+                                    const isActive = currentPage === item.id;
+                                    return (
+                                        <li key={item.id}>
+                                            <button
+                                                onClick={() => setCurrentPage(item.id)}
+                                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${isActive ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400' : 'text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700'
+                                                    }`}
+                                            >
+                                                <Icon size={20} />
+                                                {sidebarOpen && <span className="font-medium">{item.name}</span>}
+                                            </button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
+                    </div>
+                </aside>
+
+                {/* Main Content */}
+                <div className={`flex-1 flex flex-col transition-all ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>
+                    {/* Navbar */}
+                    <header className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4">
+                        <div className="flex items-center justify-between">
+                            <div className="flex items-center gap-4">
+                                <button onClick={() => setSidebarOpen(!sidebarOpen)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                                    <Menu size={20} />
+                                </button>
+                                <div className="relative">
+                                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+                                    <input type="text" placeholder="Search products..." className="pl-10 pr-4 py-2 w-80 bg-gray-100 dark:bg-gray-700 border-0 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none" />
+                                </div>
+                            </div>
+                            <div className="flex items-center gap-4">
+                                <button onClick={toggleDarkMode} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                                    {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                                </button>
+                                <button className="relative p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg">
+                                    <Bell size={20} />
+                                    <span className="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
+                                </button>
+                                <div className="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white font-semibold">BR</div>
+                            </div>
+                        </div>
+                    </header>
+
+                    {/* Dashboard Content */}
+                    <main className="flex-1 p-6">
+                        {currentPage === 'dashboard' && (
+                            <div className="space-y-6">
+                                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+
+                                {/* Stats */}
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {stats.map((stat, i) => (
+                                        <div key={i} className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                            <p className="text-gray-600 dark:text-gray-400 text-sm">{stat.title}</p>
+                                            <p className="text-3xl font-bold text-gray-900 dark:text-white mt-2">{stat.value}</p>
+                                            <p className={`text-sm mt-2 ${stat.trend === 'up' ? 'text-green-600' : 'text-orange-600'}`}>{stat.change}</p>
+                                        </div>
+                                    ))}
+                                </div>
+
+                                {/* Charts */}
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                        <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Sales Trend</h3>
+                                        <ResponsiveContainer width="100%" height={300}>
+                                            <LineChart data={salesData}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                <XAxis dataKey="month" stroke="#9ca3af" />
+                                                <YAxis stroke="#9ca3af" />
+                                                <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }} />
+                                                <Line type="monotone" dataKey="sales" stroke="#10b981" strokeWidth={2} />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </div>
+
+                                    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                        <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Orders</h3>
+                                        <ResponsiveContainer width="100%" height={300}>
+                                            <BarChart data={salesData}>
+                                                <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+                                                <XAxis dataKey="month" stroke="#9ca3af" />
+                                                <YAxis stroke="#9ca3af" />
+                                                <Tooltip contentStyle={{ backgroundColor: '#1f2937', border: 'none', borderRadius: '8px' }} />
+                                                <Bar dataKey="orders" fill="#10b981" />
+                                            </BarChart>
+                                        </ResponsiveContainer>
+                                    </div>
+                                </div>
+
+                                {/* Products Table */}
+                                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                    <div className="flex items-center justify-between mb-4">
+                                        <h3 className="text-lg font-bold text-gray-900 dark:text-white">Products</h3>
+                                        <input
+                                            type="text"
+                                            placeholder="Search..."
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                            className="px-4 py-2 bg-gray-100 dark:bg-gray-700 rounded-lg focus:ring-2 focus:ring-emerald-500 outline-none"
+                                        />
+                                    </div>
+                                    <div className="overflow-x-auto">
+                                        <table className="w-full">
+                                            <thead>
+                                                <tr className="border-b border-gray-200 dark:border-gray-700">
+                                                    <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 dark:text-gray-300">Product</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 dark:text-gray-300">Category</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 dark:text-gray-300">Price</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 dark:text-gray-300">Stock</th>
+                                                    <th className="text-left py-3 px-4 font-semibold text-sm text-gray-700 dark:text-gray-300">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {filteredProducts.map((product) => (
+                                                    <tr key={product.id} className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700">
+                                                        <td className="py-3 px-4 flex items-center gap-3">
+                                                            <span className="text-2xl">{product.image}</span>
+                                                            <span className="font-medium text-gray-900 dark:text-white">{product.name}</span>
+                                                        </td>
+                                                        <td className="py-3 px-4 text-gray-600 dark:text-gray-400">{product.category}</td>
+                                                        <td className="py-3 px-4 font-medium text-gray-900 dark:text-white">{product.price}</td>
+                                                        <td className="py-3 px-4 text-gray-600 dark:text-gray-400">{product.stock}</td>
+                                                        <td className="py-3 px-4">
+                                                            <span className={`px-2 py-1 rounded text-xs font-medium ${product.status === 'In Stock' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                                                                }`}>
+                                                                {product.status}
+                                                            </span>
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                {/* Recent Orders */}
+                                <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+                                    <h3 className="text-lg font-bold mb-4 text-gray-900 dark:text-white">Recent Orders</h3>
+                                    <div className="space-y-3">
+                                        {recentOrders.map((order) => (
+                                            <div key={order.id} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700/50 rounded-lg">
+                                                <div className="flex-1">
+                                                    <p className="font-medium text-gray-900 dark:text-white">{order.id} - {order.customer}</p>
+                                                    <p className="text-sm text-gray-600 dark:text-gray-400">{order.product}</p>
+                                                </div>
+                                                <div className="text-right">
+                                                    <p className="font-semibold text-gray-900 dark:text-white">{order.amount}</p>
+                                                    <p className="text-xs text-gray-500">{order.date}</p>
+                                                </div>
+                                                <span className={`ml-4 px-3 py-1 rounded text-xs font-medium ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
+                                                    order.status === 'Shipped' ? 'bg-blue-100 text-blue-700' :
+                                                        'bg-yellow-100 text-yellow-700'
+                                                    }`}>
+                                                    {order.status}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
+
+                        {currentPage === 'products' && (
+                            <PlaceholderPage
+                                title="Product Management"
+                                description="Complete product catalog with inventory tracking, bulk operations, and advanced filtering."
+                                icon={Package}
+                            />
+                        )}
+                        {currentPage === 'orders' && (
+                            <PlaceholderPage
+                                title="Order Management"
+                                description="Track and manage all orders with status updates, shipping integration, and customer notifications."
+                                icon={ShoppingCart}
+                            />
+                        )}
+                        {currentPage === 'customers' && (
+                            <PlaceholderPage
+                                title="Customer Management"
+                                description="Manage customer profiles, order history, loyalty programs, and communication preferences."
+                                icon={Users}
+                            />
+                        )}
+                        {currentPage === 'analytics' && (
+                            <PlaceholderPage
+                                title="Advanced Analytics"
+                                description="Deep insights into sales trends, customer behavior, product performance, and revenue forecasting."
+                                icon={BarChart3}
+                            />
+                        )}
+                        {currentPage === 'settings' && (
+                            <PlaceholderPage
+                                title="Store Settings"
+                                description="Configure payment gateways, shipping options, tax settings, and store preferences."
+                                icon={Settings}
+                            />
+                        )}
+                    </main>
+                </div>
+                <AIAssistant />
+            </div>
+        </div>
+    );
+}
+
+export default App;

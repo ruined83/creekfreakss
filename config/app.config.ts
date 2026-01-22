@@ -47,104 +47,116 @@ export const appConfig = {
     // Working directory in sandbox
     workingDirectory: '/home/user/app',
   },
-  
+
   // AI Model Configuration
   ai: {
     // Default AI model
-    defaultModel: 'google/gemini-3-pro-preview',
-    
+    defaultModel: 'google/gemini-2.0-flash-exp',
+
     // Available models
     availableModels: [
-      'openai/gpt-5',
+      'google/gemini-2.0-flash-exp',
       'moonshotai/kimi-k2-instruct-0905',
-      'anthropic/claude-sonnet-4-20250514',
-      'google/gemini-3-pro-preview'
+      'openai/gpt-4o',
+      'anthropic/claude-3-5-sonnet-20240620',
+      'deepseek/deepseek-chat',
+      'deepseek/deepseek-r1'
     ],
-    
+
     // Model display names
     modelDisplayNames: {
-      'openai/gpt-5': 'GPT-5',
+      'openai/gpt-4o': 'GPT-4o',
       'moonshotai/kimi-k2-instruct-0905': 'Kimi K2 (Groq)',
-      'anthropic/claude-sonnet-4-20250514': 'Sonnet 4',
-      'google/gemini-3-pro-preview': 'Gemini 3 Pro (Preview)'
+      'anthropic/claude-3-5-sonnet-20240620': 'Claude 3.5 Sonnet',
+      'google/gemini-2.0-flash-exp': 'Gemini 2.0 Flash',
+      'deepseek/deepseek-chat': 'DeepSeek V3',
+      'deepseek/deepseek-r1': 'DeepSeek R1'
     } as Record<string, string>,
-    
+
     // Model API configuration
     modelApiConfig: {
       'moonshotai/kimi-k2-instruct-0905': {
         provider: 'groq',
         model: 'moonshotai/kimi-k2-instruct-0905'
+      },
+      'deepseek/deepseek-chat': {
+        provider: 'openrouter',
+        model: 'deepseek/deepseek-chat'
+      },
+      'deepseek/deepseek-r1': {
+        provider: 'openrouter',
+        model: 'deepseek/deepseek-r1'
       }
     },
-    
+
     // Temperature settings for non-reasoning models
     defaultTemperature: 0.7,
-    
+
     // Max tokens for code generation
     maxTokens: 8000,
-    
+
     // Max tokens for truncation recovery
     truncationRecoveryMaxTokens: 4000,
   },
-  
+
   // Code Application Configuration
   codeApplication: {
     // Delay after applying code before refreshing iframe (milliseconds)
     defaultRefreshDelay: 2000,
-    
+
     // Delay when packages are installed (milliseconds)
     packageInstallRefreshDelay: 5000,
-    
+
     // Enable/disable automatic truncation recovery
     enableTruncationRecovery: false, // Disabled - too many false positives
-    
+
     // Maximum number of truncation recovery attempts per file
     maxTruncationRecoveryAttempts: 1,
   },
-  
+
   // UI Configuration
   ui: {
     // Show/hide certain UI elements
     showModelSelector: true,
     showStatusIndicator: true,
-    
+
     // Animation durations (milliseconds)
     animationDuration: 200,
-    
+
     // Toast notification duration (milliseconds)
     toastDuration: 3000,
-    
+
     // Maximum chat messages to keep in memory
     maxChatMessages: 100,
-    
+
     // Maximum recent messages to send as context
     maxRecentMessagesContext: 20,
   },
-  
+
   // Development Configuration
   dev: {
     // Enable debug logging
     enableDebugLogging: true,
-    
+
     // Enable performance monitoring
     enablePerformanceMonitoring: false,
-    
+
     // Log API responses
     logApiResponses: true,
   },
-  
+
   // Package Installation Configuration
   packages: {
     // Use --legacy-peer-deps flag for npm install
     useLegacyPeerDeps: true,
-    
+
     // Package installation timeout (milliseconds)
     installTimeout: 60000,
-    
+
     // Auto-restart Vite after package installation
     autoRestartVite: true,
   },
-  
+
   // File Management Configuration
   files: {
     // Excluded file patterns (files to ignore)
@@ -157,10 +169,10 @@ export const appConfig = {
       '*.log',
       '.DS_Store'
     ],
-    
+
     // Maximum file size to read (bytes)
     maxFileSize: 1024 * 1024, // 1MB
-    
+
     // File extensions to treat as text
     textFileExtensions: [
       '.js', '.jsx', '.ts', '.tsx',
@@ -171,13 +183,13 @@ export const appConfig = {
       '.gitignore', '.dockerignore'
     ],
   },
-  
+
   // API Endpoints Configuration (for external services)
   api: {
     // Retry configuration
     maxRetries: 3,
     retryDelay: 1000, // milliseconds
-    
+
     // Request timeout (milliseconds)
     requestTimeout: 30000,
   }
