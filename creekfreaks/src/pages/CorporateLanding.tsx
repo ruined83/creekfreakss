@@ -81,9 +81,9 @@ const CorporateLanding = () => {
                             <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-6 text-blue-400">
                                 <BarChart3 className="w-6 h-6" />
                             </div>
-                            <h3 className="text-xl font-semibold mb-3">Sentiment & Grief Analytics</h3>
+                            <h3 className="text-xl font-semibold mb-3">Sentiment & Resilience Telemetry</h3>
                             <p className="text-slate-400 leading-relaxed">
-                                Real-time tracking of community emotional health using our proprietary "Resilience Score" algorithm.
+                                Real-time tracking of network node stability using our proprietary "Resilience Score" algorithm.
                             </p>
                         </div>
                         <div className="p-8 rounded-2xl bg-slate-950 border border-slate-800/60 hover:border-slate-700 transition-colors">
@@ -171,7 +171,7 @@ const CorporateLanding = () => {
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">Engine: Neural Vesper</h3>
                                 <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
-                                    Proprietary SDXL pipeline (ComfyUI) for real-time therapeutic imagery. Leveraging custom LoRAs for culturally specific visual anchors.
+                                    Proprietary SDXL pipeline (ComfyUI) for real-time generative visual anchors. Leveraging custom LoRAs for context-aware visual synthesis.
                                 </p>
                                 <a href="#" className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-medium text-sm gap-2">
                                     View Model Card <ArrowRight className="w-4 h-4" />
