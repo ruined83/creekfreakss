@@ -131,9 +131,9 @@ const CorporateLanding = () => {
                                 <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
                                     The frontend interface for our community resilience engine. Gamified mental health engagement with over 10,000 active nodes.
                                 </p>
-                                <Link to="/community" className="inline-flex items-center text-blue-400 hover:text-blue-300 font-medium text-sm gap-2">
-                                    View Live Deployment <ArrowRight className="w-4 h-4" />
-                                </Link>
+                                <span className="inline-flex items-center text-slate-500 font-medium text-sm gap-2 cursor-not-allowed">
+                                    Private Beta Access Only <ArrowRight className="w-4 h-4" />
+                                </span>
                             </div>
                         </div>
 
