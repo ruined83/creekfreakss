@@ -16,6 +16,7 @@ import AdminAuth from "./pages/AdminAuth";
 import ChargerProject from "./pages/ChargerProject";
 import Product from "./pages/Product";
 import NotFound from "./pages/NotFound";
+import CorporateLanding from "./pages/CorporateLanding";
 
 import { AmbientPlayer } from "@/components/AmbientPlayer";
 
@@ -29,11 +30,27 @@ const App = () => (
       <AmbientPlayer />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Index />} />
+          {/* Corporate / Startup Face (Default) */}
+          <Route path="/" element={<CorporateLanding />} />
+          <Route path="/enterprise" element={<CorporateLanding />} />
+
+          {/* Community App (Moved to Subpage) */}
+          <Route path="/community" element={<Index />} />
+
           <Route path="/story" element={<Story />} />
           <Route path="/plant-a-tree" element={<PlantATree />} />
           <Route path="/memorial-wall" element={<MemorialWall />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/podcast" element={<Podcast />} />
+          {/* Duplicate community route for legacy support if needed, but Index is better at /community */}
+          {/* <Route path="/community" element={<Community />} /> -- Renamed old Community page? No, wait. */}
+          {/* Checking imports: Community was already a page. Index was the home page. */}
+          {/* Let's keep the existing /community route as is (it was import Community from "./pages/Community") */}
+          {/* We are moving the OLD HOME (Dashboard/Index) to /dashboard or /app */}
+
+          <Route path="/dashboard" element={<Index />} />
+
+          {/* Original Pages */}
           <Route path="/podcast" element={<Podcast />} />
           <Route path="/community" element={<Community />} />
           <Route path="/contact" element={<Contact />} />
