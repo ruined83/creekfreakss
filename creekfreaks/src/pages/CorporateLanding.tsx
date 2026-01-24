@@ -182,64 +182,7 @@ const CorporateLanding = () => {
                 </div>
             </section>
 
-            {/* Team Section */}
-            <section id="about" className="py-24 bg-slate-950">
-                <div className="container mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold mb-4">Leadership Team</h2>
-                        <p className="text-slate-400">Pioneers in predictive community modeling.</p>
-                    </div>
-                    <div className="grid md:grid-cols-3 gap-12">
-                        {/* CEO */}
-                        <div className="group">
-                            <div className="aspect-[4/5] overflow-hidden rounded-xl bg-slate-900 mb-6 border border-slate-800 group-hover:border-blue-500/50 transition-colors relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-60"></div>
-                                {/* Placeholder for Headshot */}
-                                <div className="w-full h-full flex items-center justify-center text-slate-700 font-mono text-xs">
-                                    [CEO_HEADSHOT]
-                                </div>
-                            </div>
-                            <h3 className="text-xl font-bold mb-1">J.D. Thorne</h3>
-                            <p className="text-blue-500 text-sm font-medium mb-3">Co-Founder & CEO</p>
-                            <p className="text-slate-400 text-sm leading-relaxed">
-                                Former Systems Architect at [Redacted]. 12 years in distributed systems and behavioral analytics.
-                            </p>
-                        </div>
 
-                        {/* CTO */}
-                        <div className="group">
-                            <div className="aspect-[4/5] overflow-hidden rounded-xl bg-slate-900 mb-6 border border-slate-800 group-hover:border-purple-500/50 transition-colors relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-60"></div>
-                                {/* Placeholder for Headshot */}
-                                <div className="w-full h-full flex items-center justify-center text-slate-700 font-mono text-xs">
-                                    [CTO_HEADSHOT]
-                                </div>
-                            </div>
-                            <h3 className="text-xl font-bold mb-1">Dr. Elena V.</h3>
-                            <p className="text-purple-500 text-sm font-medium mb-3">Co-Founder & CTO</p>
-                            <p className="text-slate-400 text-sm leading-relaxed">
-                                Ph.D. in Computational Linguistics. Expert in large-scale vector databases and NLP.
-                            </p>
-                        </div>
-
-                        {/* COO */}
-                        <div className="group">
-                            <div className="aspect-[4/5] overflow-hidden rounded-xl bg-slate-900 mb-6 border border-slate-800 group-hover:border-emerald-500/50 transition-colors relative">
-                                <div className="absolute inset-0 bg-gradient-to-t from-slate-950 to-transparent opacity-60"></div>
-                                {/* Placeholder for Headshot */}
-                                <div className="w-full h-full flex items-center justify-center text-slate-700 font-mono text-xs">
-                                    [COO_HEADSHOT]
-                                </div>
-                            </div>
-                            <h3 className="text-xl font-bold mb-1">Marcus Chen</h3>
-                            <p className="text-emerald-500 text-sm font-medium mb-3">Head of Partnerships</p>
-                            <p className="text-slate-400 text-sm leading-relaxed">
-                                Serial HealthTech entrepreneur. Specializes in B2G frameworks and enterprise sales cycles.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </section>
 
             {/* Footer */}
             <footer className="py-12 border-t border-slate-800 bg-slate-950">
