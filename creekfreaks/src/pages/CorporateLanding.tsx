@@ -115,7 +115,7 @@ const CorporateLanding = () => {
                         <h2 className="text-3xl font-bold mb-4">Creek Freaks Labs</h2>
                         <p className="text-slate-400">Our conceptual R&D pipeline powering the next generation of resilient systems.</p>
                     </div>
-                    <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         {/* Project 1: The App (Consumer) */}
                         <div className="group rounded-2xl bg-slate-950 border border-slate-800 p-1 hover:border-blue-500/50 transition-colors">
                             <div className="bg-slate-900/50 rounded-xl p-8 h-full flex flex-col">
@@ -154,6 +154,27 @@ const CorporateLanding = () => {
                                 </p>
                                 <a href="#" className="inline-flex items-center text-purple-400 hover:text-purple-300 font-medium text-sm gap-2">
                                     View Technical Paper <ArrowRight className="w-4 h-4" />
+                                </a>
+                            </div>
+                        </div>
+
+                        {/* Project 3: Neural Vesper (ComfyUI) */}
+                        <div className="group rounded-2xl bg-slate-950 border border-slate-800 p-1 hover:border-emerald-500/50 transition-colors md:col-span-2 lg:col-span-1">
+                            <div className="bg-slate-900/50 rounded-xl p-8 h-full flex flex-col">
+                                <div className="flex justify-between items-start mb-6">
+                                    <div className="p-3 bg-emerald-500/10 rounded-lg text-emerald-400">
+                                        <BarChart3 className="w-6 h-6" />
+                                    </div>
+                                    <span className="px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 text-xs font-medium border border-emerald-500/20">
+                                        GEN AI ENGINE
+                                    </span>
+                                </div>
+                                <h3 className="text-xl font-bold mb-2">Engine: Neural Vesper</h3>
+                                <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                                    Proprietary SDXL pipeline (ComfyUI) for real-time therapeutic imagery. Leveraging custom LoRAs for culturally specific visual anchors.
+                                </p>
+                                <a href="#" className="inline-flex items-center text-emerald-400 hover:text-emerald-300 font-medium text-sm gap-2">
+                                    View Model Card <ArrowRight className="w-4 h-4" />
                                 </a>
                             </div>
                         </div>
