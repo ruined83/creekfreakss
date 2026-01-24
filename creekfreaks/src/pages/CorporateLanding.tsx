@@ -18,8 +18,8 @@ const CorporateLanding = () => {
                         <a href="#about" className="hover:text-blue-400 transition-colors">Company</a>
                     </div>
                     <div className="flex items-center gap-4">
-                        <Button variant="ghost" className="text-slate-400 hover:text-white hover:bg-slate-800">Sign In</Button>
-                        <Button className="bg-blue-600 hover:bg-blue-500 text-white border-0">Request Demo</Button>
+                        <Button variant="ghost" className="text-slate-400 hover:text-white hover:bg-slate-800" onClick={() => alert("Portal access is restricted to enterprise IP ranges.")}>Sign In</Button>
+                        <Button className="bg-blue-600 hover:bg-blue-500 text-white border-0" onClick={() => window.location.href = 'mailto:sales@creekfreakss.com?subject=Demo%20Request'}>Request Demo</Button>
                     </div>
                 </div>
             </nav>
@@ -42,10 +42,10 @@ const CorporateLanding = () => {
                             Leverage proprietary LLMs and sentiment analytics to measure, predict, and enhance community engagement in niche capability sectors.
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                            <Button size="lg" className="bg-white text-slate-950 hover:bg-slate-200 h-12 px-8 text-base">
+                            <Button size="lg" className="bg-white text-slate-950 hover:bg-slate-200 h-12 px-8 text-base" onClick={() => window.location.href = 'mailto:founders@creekfreakss.com?subject=Enterprise%20Trial%20Access'}>
                                 Start Free Trial
                             </Button>
-                            <Button size="lg" variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white h-12 px-8 text-base">
+                            <Button size="lg" variant="outline" className="border-slate-700 text-slate-300 hover:bg-slate-800 hover:text-white h-12 px-8 text-base" onClick={() => window.location.href = 'mailto:docs@creekfreakss.com?subject=Documentation%20Request'}>
                                 View Documentation
                             </Button>
                         </div>
