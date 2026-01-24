@@ -129,7 +129,7 @@ const CorporateLanding = () => {
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">Project: River (Consumer)</h3>
                                 <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
-                                    The frontend interface for our community resilience engine. Gamified mental health engagement with over 10,000 active nodes.
+                                    The frontend interface for our community resilience engine. Gamified cognitive resilience reinforcement with over 10,000 active nodes.
                                 </p>
                                 <span className="inline-flex items-center text-slate-500 font-medium text-sm gap-2 cursor-not-allowed">
                                     Private Beta Access Only <ArrowRight className="w-4 h-4" />
@@ -150,7 +150,7 @@ const CorporateLanding = () => {
                                 </div>
                                 <h3 className="text-xl font-bold mb-2">Architecture: Open Lovable</h3>
                                 <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
-                                    Autonomous AI code generation infrastructure. Self-healing frontend systems designed for rapid deployment of health-critical interfaces.
+                                    Autonomous AI code generation infrastructure. Autonomic frontend frameworks designed for rapid deployment of mission-critical telemetry dashboards.
                                 </p>
                                 <a href="#" className="inline-flex items-center text-purple-400 hover:text-purple-300 font-medium text-sm gap-2">
                                     View Technical Paper <ArrowRight className="w-4 h-4" />
